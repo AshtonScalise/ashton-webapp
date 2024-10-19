@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { Button } from "@mui/material";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface Props {
   /**
@@ -39,6 +40,8 @@ function ElevationScroll(props: Props) {
 }
 
 export default function MainAppBar(props: Props) {
+  const { status, data: session } = useSession();
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -48,11 +51,24 @@ export default function MainAppBar(props: Props) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Placeholder
             </Typography>
-            <Link href="/api/auth/signin" passHref>
-              <Button color="inherit" sx={{ ml: "auto" }}>
-                Login
-              </Button>
-            </Link>
+            {status === "loading" && <Typography>Loading...</Typography>}
+            {status === "authenticated" && (
+              <Typography>
+                {session.user!.name}
+                <Link href="/api/auth/signout" passHref>
+                  <Button color="inherit" sx={{ ml: "auto" }}>
+                    Sign out
+                  </Button>
+                </Link>
+              </Typography>
+            )}
+            {status === "unauthenticated" && (
+              <Link href="/api/auth/signin" passHref>
+                <Button color="inherit" sx={{ ml: "auto" }}>
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
