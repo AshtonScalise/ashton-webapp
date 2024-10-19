@@ -8,6 +8,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import { Button } from "@mui/material";
+import Link from "next/link";
 
 interface Props {
   /**
@@ -43,9 +45,14 @@ export default function MainAppBar(props: Props) {
       <ElevationScroll {...props}>
         <AppBar>
           <Toolbar>
-            <Typography variant="h6" component="div">
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Placeholder
             </Typography>
+            <Link href="/api/auth/signin" passHref>
+              <Button color="inherit" sx={{ ml: "auto" }}>
+                Login
+              </Button>
+            </Link>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
