@@ -5,7 +5,7 @@ export default function Home() {
     <Container sx={{ overflowY: "auto", height: "100%" }}>
       <Box sx={{ my: 2 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          I'm Ashton
+          I&apos;m Ashton
         </Typography>
         <Typography variant="body1" paragraph>
           This is my resume / portfolio. Many things to come; I will keep
