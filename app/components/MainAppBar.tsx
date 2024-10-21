@@ -7,11 +7,10 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { useThemeContext } from "../wrappers/ThemeProviderWrapper";
+import ThemeToggleButton from "../components/ThemeToggleButton";
 
 export default function MainAppBar() {
   const { status, data: session } = useSession();
-  const { toggleTheme } = useThemeContext(); // Access the toggleTheme function
 
   return (
     <AppBar>
@@ -19,9 +18,7 @@ export default function MainAppBar() {
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Placeholder
         </Typography>
-        <Button color="inherit" onClick={toggleTheme}>
-          Toggle Theme
-        </Button>
+        <ThemeToggleButton /> {/* Use the new ThemeToggleButton here */}
         {status === "loading" && <Typography>Loading...</Typography>}
         {status === "authenticated" && (
           <>
