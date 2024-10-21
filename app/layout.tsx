@@ -39,7 +39,7 @@ export default function RootLayout({
               sx={{
                 marginTop: "60px", // Reduced margin for better spacing
 
-                padding: "20px", // Padding inside the Paper component
+                padding: "10px", // Padding inside the Paper component
 
                 height: "calc(100vh - 60px)",
                 overflowY: "auto", // Allow for scrolling if content overflows
