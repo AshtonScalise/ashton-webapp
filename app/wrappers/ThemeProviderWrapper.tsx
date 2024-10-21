@@ -42,6 +42,14 @@ export const ThemeProviderWrapper = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  useEffect(() => {
+    // Set scrollbar colors based on the theme
+    document.documentElement.style.setProperty(
+      "color-scheme",
+      theme.palette.mode
+    );
+  }, [theme]);
+
   // Function to toggle theme between light and dark
   const toggleTheme = () => {
     const newTheme = theme.palette.mode === "light" ? darkTheme : lightTheme;
