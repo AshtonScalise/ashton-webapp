@@ -25,7 +25,7 @@ export default function Home() {
     <Container sx={{ overflowY: "auto", height: "100%" }}>
       <Box sx={{ my: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          I'm Ashton
+          I&aposm Ashton
         </Typography>
         <Typography variant="body1" paragraph>
           Software Engineer with over 5 years of experience in developing
