@@ -14,6 +14,14 @@ export async function GET(
     );
   }
 
+  // Check if x is 7 to return a 500 status
+  if (x === 7) {
+    return NextResponse.json(
+      { error: "Internal server error." },
+      { status: 500 }
+    );
+  }
+
   // Determine if we should hang for 15 seconds or not hang at all for x = 15
   if (x === 15) {
     const shouldHang = Math.random() < 0.5; // 50% chance
