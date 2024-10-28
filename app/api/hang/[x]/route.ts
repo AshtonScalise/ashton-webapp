@@ -14,10 +14,26 @@ export async function GET(
     );
   }
 
-  // Delay function to "hang" for x seconds
-  await new Promise((resolve) => setTimeout(resolve, x * 1000));
+  // Determine if we should hang for 15 seconds or not hang at all for x = 15
+  if (x === 15) {
+    const shouldHang = Math.random() < 0.5; // 50% chance
 
-  return NextResponse.json({
-    message: `Hello world, hung for ${x} seconds`,
-  });
+    if (shouldHang) {
+      // Delay function to "hang" for 15 seconds
+      await new Promise((resolve) => setTimeout(resolve, 15 * 1000));
+      return NextResponse.json({
+        message: `Hello world, hung for 15 seconds`,
+      });
+    } else {
+      return NextResponse.json({
+        message: `Hello world, did not hang at all`,
+      });
+    }
+  } else {
+    // Delay function to "hang" for x seconds for all other values
+    await new Promise((resolve) => setTimeout(resolve, x * 1000));
+    return NextResponse.json({
+      message: `Hello world, hung for ${x} seconds`,
+    });
+  }
 }
