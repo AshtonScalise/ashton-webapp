@@ -5,6 +5,7 @@ import supabase from "@/supabase/supabaseClient";
 export async function GET(request: NextRequest) {
   try {
     // Fetch all flights from Supabase
+    console.log(request);
     const { data: flights, error } = await supabase
       .from("flights") // Ensure "flights" matches your table name
       .select("*"); // Select all columns
