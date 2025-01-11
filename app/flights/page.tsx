@@ -7,8 +7,10 @@ export default async function FlightsPage() {
   const flightData = flightsJson.data;
   console.log(flightsJson);
   return (
-    <div>
-      <FlightsCharts flightData={flightData}></FlightsCharts>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ width: "100%", maxWidth: 1400 }}>
+        <FlightsCharts flightData={flightData}></FlightsCharts>
+      </div>
     </div>
   );
 }
