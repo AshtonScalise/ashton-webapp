@@ -87,3 +87,56 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    console.log("request");
+    // Step 1: Fetch all the ids from the flights table
+    const { data: flights, error: fetchError } = await supabase
+      .from("flights")
+      .select("id"); // Only select the id column
+
+    if (fetchError) {
+      console.error("Error fetching flight ids:", fetchError);
+      return NextResponse.json(
+        { success: false, error: fetchError.message },
+        { status: 500 }
+      );
+    }
+
+    if (!flights || flights.length === 0) {
+      return NextResponse.json(
+        { success: false, error: "No flights to delete" },
+        { status: 400 }
+      );
+    }
+
+    // Step 2: Extract ids from the fetched flights
+    const idsToDelete = flights.map((flight) => flight.id);
+
+    // Step 3: Delete the flights with the fetched ids
+    const { error } = await supabase
+      .from("flights")
+      .delete()
+      .in("id", idsToDelete); // Delete flights by ids
+
+    if (error) {
+      console.error("Error deleting flights:", error);
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: "All flights deleted" },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return NextResponse.json(
+      { success: false, error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
