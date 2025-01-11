@@ -74,49 +74,6 @@ interface FlightsChartsProps {
   flightData: FlightData[];
 }
 
-const commonOptions = {
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: "X-Axis Label",
-        color: "#fff", // White for axis title
-      },
-      ticks: {
-        color: "#ddd", // Light gray for ticks
-      },
-      grid: {
-        color: "#444", // Dark gray for gridlines
-      },
-    },
-    y: {
-      title: {
-        display: true,
-        text: "Y-Axis Label",
-        color: "#fff",
-      },
-      ticks: {
-        color: "#ddd",
-      },
-      grid: {
-        color: "#444",
-      },
-    },
-  },
-  plugins: {
-    legend: {
-      labels: {
-        color: "#ddd", // Light gray for legend text
-      },
-    },
-    tooltip: {
-      backgroundColor: "#333", // Dark tooltip background
-      titleColor: "#fff", // White tooltip title
-      bodyColor: "#fff", // White tooltip body
-    },
-  },
-};
-
 const createChartsData = (flightData: FlightData[]) => {
   const scatterData: ScatterData = {
     datasets: [
