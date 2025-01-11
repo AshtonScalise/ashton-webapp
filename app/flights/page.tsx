@@ -8,10 +8,14 @@ export default async function FlightsPage() {
   const flightsJson = await flightsRes.json();
   const flightData = flightsJson.data;
   console.log(flightsJson);
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div style={{ width: "100%", maxWidth: 1400 }}>
-        <FlightsCharts flightData={flightData}></FlightsCharts>
+        {flightData.length > 0 && (
+          <FlightsCharts flightData={flightData}></FlightsCharts>
+        )}
+        {flightData.length == 0 && <div>No data found</div>}
       </div>
     </div>
   );

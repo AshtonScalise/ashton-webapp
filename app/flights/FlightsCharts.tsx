@@ -29,7 +29,8 @@ ChartJS.register(
 // Type definitions for flight data
 interface FlightData {
   flight_numbers: string;
-  date: string;
+  initial_departure_date: string;
+  return_departure_date: string;
   stops: number;
   price: number;
   duration: number;
@@ -73,6 +74,49 @@ interface FlightsChartsProps {
   flightData: FlightData[];
 }
 
+const commonOptions = {
+  scales: {
+    x: {
+      title: {
+        display: true,
+        text: "X-Axis Label",
+        color: "#fff", // White for axis title
+      },
+      ticks: {
+        color: "#ddd", // Light gray for ticks
+      },
+      grid: {
+        color: "#444", // Dark gray for gridlines
+      },
+    },
+    y: {
+      title: {
+        display: true,
+        text: "Y-Axis Label",
+        color: "#fff",
+      },
+      ticks: {
+        color: "#ddd",
+      },
+      grid: {
+        color: "#444",
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: "#ddd", // Light gray for legend text
+      },
+    },
+    tooltip: {
+      backgroundColor: "#333", // Dark tooltip background
+      titleColor: "#fff", // White tooltip title
+      bodyColor: "#fff", // White tooltip body
+    },
+  },
+};
+
 const createChartsData = (flightData: FlightData[]) => {
   const scatterData: ScatterData = {
     datasets: [
@@ -91,14 +135,12 @@ const createChartsData = (flightData: FlightData[]) => {
 
           if (!dataset || !dataset.data) return "#f44336"; // Default to red if dataset or data is null
 
-          // Cast dataset.data to the expected structure
           const dataPoint = dataset.data[context.dataIndex] as {
             x: number;
             y: number;
             stops: number;
           };
 
-          // Safely access the `stops` property
           const stops = dataPoint.stops;
 
           return stops === 0 ? "#4caf50" : stops === 1 ? "#ffeb3b" : "#f44336"; // Softer colors for stops
@@ -108,21 +150,41 @@ const createChartsData = (flightData: FlightData[]) => {
     ],
   };
 
-  const lineData: LineData = {
-    labels: flightData.map((flight) => flight.date), // Dates as labels
+  const initialDepartureLineData: LineData = {
+    labels: flightData.map((flight) => flight.initial_departure_date),
     datasets: [
       {
-        label: "Price ($)",
-        data: flightData.map((flight) => flight.price), // Prices
+        label: "Price ($) on Initial Departure Date",
+        data: flightData.map((flight) => flight.price), // Prices for initial departure
         fill: false,
         borderColor: "#4b9bff", // Softer blue
         tension: 0.1,
       },
       {
-        label: "Duration (minutes)",
-        data: flightData.map((flight) => flight.duration), // Durations
+        label: "Duration (minutes) on Initial Departure Date",
+        data: flightData.map((flight) => flight.duration), // Durations for initial departure
         fill: false,
         borderColor: "#f0a500", // Softer golden yellow
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const returnDepartureLineData: LineData = {
+    labels: flightData.map((flight) => flight.return_departure_date),
+    datasets: [
+      {
+        label: "Price ($) on Return Departure Date",
+        data: flightData.map((flight) => flight.price), // Prices for return departure
+        fill: false,
+        borderColor: "#ff4b4b", // Softer red
+        tension: 0.1,
+      },
+      {
+        label: "Duration (minutes) on Return Departure Date",
+        data: flightData.map((flight) => flight.duration), // Durations for return departure
+        fill: false,
+        borderColor: "#4caf50", // Softer green
         tension: 0.1,
       },
     ],
@@ -148,57 +210,147 @@ const createChartsData = (flightData: FlightData[]) => {
     ],
   };
 
-  return { scatterData, lineData, barData };
+  return {
+    scatterData,
+    initialDepartureLineData,
+    returnDepartureLineData,
+    barData,
+  };
 };
 
 const FlightsCharts = ({ flightData }: FlightsChartsProps) => {
-  const { scatterData, lineData, barData } = createChartsData(flightData);
+  const {
+    scatterData,
+    initialDepartureLineData,
+    returnDepartureLineData,
+    barData,
+  } = createChartsData(flightData);
 
   return (
     <div>
       <h1 style={{ color: "#fff" }}>Flight Data Charts</h1>
 
       <div>
-        <h2 style={{ color: "#fff" }}>Scatter Plot: Price vs Duration</h2>
+        <h2 style={{ color: "#fff" }}>Initial Departure Dates</h2>
+        <Line
+          data={initialDepartureLineData}
+          options={{
+            scales: {
+              x: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
+                title: {
+                  display: true,
+                  text: "Initial Departure Date",
+                  color: "#fff",
+                },
+              },
+              y: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
+                title: { display: true, text: "Value", color: "#fff" },
+              },
+            },
+          }}
+        />
+      </div>
+
+      <div>
+        <h2 style={{ color: "#fff" }}>Return Departure Dates</h2>
+        <Line
+          data={returnDepartureLineData}
+          options={{
+            scales: {
+              x: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
+                title: {
+                  display: true,
+                  text: "Return Departure Date",
+                  color: "#fff",
+                },
+              },
+              y: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
+                title: { display: true, text: "Value", color: "#fff" },
+              },
+            },
+          }}
+        />
+      </div>
+
+      <div>
+        <h2 style={{ color: "#fff" }}>Price & Duration by Flight</h2>
+        <Bar
+          data={barData}
+          options={{
+            scales: {
+              x: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
+              },
+              y: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
+                title: { display: true, text: "Value", color: "#fff" },
+              },
+            },
+          }}
+        />
+      </div>
+      <div>
+        <h2 style={{ color: "#fff" }}>Price vs Duration</h2>
         <Scatter
           data={scatterData}
           options={{
             scales: {
               x: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
                 title: {
                   display: true,
                   text: "Duration (minutes)",
                   color: "#fff",
                 },
               },
-              y: { title: { display: true, text: "Price ($)", color: "#fff" } },
-            },
-          }}
-        />
-      </div>
-
-      <div>
-        <h2 style={{ color: "#fff" }}>
-          Line Chart: Price & Duration Over Time
-        </h2>
-        <Line
-          data={lineData}
-          options={{
-            scales: {
-              x: { title: { display: true, text: "Date", color: "#fff" } },
-              y: { title: { display: true, text: "Value", color: "#fff" } },
-            },
-          }}
-        />
-      </div>
-
-      <div>
-        <h2 style={{ color: "#fff" }}>Bar Chart: Price & Duration by Flight</h2>
-        <Bar
-          data={barData}
-          options={{
-            scales: {
-              y: { title: { display: true, text: "Value", color: "#fff" } },
+              y: {
+                ticks: {
+                  color: "#ddd", // Light gray for ticks
+                },
+                grid: {
+                  color: "#444", // Dark gray for gridlines
+                },
+                title: { display: true, text: "Price ($)", color: "#fff" },
+              },
             },
           }}
         />
