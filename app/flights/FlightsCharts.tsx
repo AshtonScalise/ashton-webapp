@@ -11,6 +11,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartDataset,
 } from "chart.js";
 
 // Register required chart components
@@ -38,7 +39,10 @@ interface ScatterData {
   datasets: {
     label: string;
     data: { x: number; y: number; stops: number }[];
-    backgroundColor: (context: any) => string;
+    backgroundColor: (context: {
+      dataset: ChartDataset;
+      dataIndex: number;
+    }) => string;
     pointRadius: number;
   }[];
 }
@@ -79,8 +83,24 @@ const createChartsData = (flightData: FlightData[]) => {
           y: flight.price, // Price as Y-axis
           stops: flight.stops, // Stops for color
         })),
-        backgroundColor: function (context: any) {
-          const stops = context.dataset.data[context.dataIndex].stops;
+        backgroundColor: function (context: {
+          dataset: ChartDataset;
+          dataIndex: number;
+        }) {
+          const dataset = context.dataset;
+
+          if (!dataset || !dataset.data) return "#f44336"; // Default to red if dataset or data is null
+
+          // Cast dataset.data to the expected structure
+          const dataPoint = dataset.data[context.dataIndex] as {
+            x: number;
+            y: number;
+            stops: number;
+          };
+
+          // Safely access the `stops` property
+          const stops = dataPoint.stops;
+
           return stops === 0 ? "#4caf50" : stops === 1 ? "#ffeb3b" : "#f44336"; // Softer colors for stops
         },
         pointRadius: 8,
