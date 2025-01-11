@@ -47,10 +47,11 @@ export async function POST(request: NextRequest) {
 
     // Validate each flight object has the necessary attributes
     for (const flight of body) {
-      const { flight_number, date, stops, price } = flight;
+      const { flight_numbers, date, stops, price, duration } = flight;
       if (
-        !flight_number ||
+        !flight_numbers ||
         !date ||
+        !duration ||
         typeof stops !== "number" ||
         typeof price !== "number"
       ) {
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
           {
             success: false,
             error:
-              "Each flight object must have 'flight_number', 'date', 'stops' (number), and 'price' (number)",
+              "Each flight object must have 'flight_numbers', 'date', 'stops' (number), and 'price' (number), duration",
           },
           { status: 400 }
         );
