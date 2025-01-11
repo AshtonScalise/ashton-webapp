@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    console.log("request");
+    console.log(request);
     // Step 1: Fetch all the ids from the flights table
     const { data: flights, error: fetchError } = await supabase
       .from("flights")
