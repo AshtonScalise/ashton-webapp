@@ -42,6 +42,7 @@ export default function RootLayout({
                 padding: "10px", // Padding inside the Paper component
 
                 height: "calc(100vh - 60px)",
+                width: "100vw",
                 overflowY: "auto", // Allow for scrolling if content overflows
               }}
             >

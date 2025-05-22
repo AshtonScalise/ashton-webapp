@@ -11,7 +11,7 @@ export default async function FlightsPage() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ width: "100%", maxWidth: 1400 }}>
+      <div style={{ width: "100%", maxWidth: 2000 }}>
         {flightData.length > 0 && (
           <FlightsCharts flightData={flightData}></FlightsCharts>
         )}

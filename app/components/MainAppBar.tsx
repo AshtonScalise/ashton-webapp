@@ -19,7 +19,7 @@ import { useSession } from "next-auth/react";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { useRouter } from "next/navigation";
 
-const pages = ["Home", "Demos"];
+const pages = ["Home"]; //, "Demos"];
 const settings = ["Profile", "Account", "Logout"];
 
 export default function MainAppBar() {
@@ -158,7 +158,7 @@ export default function MainAppBar() {
         {status === "unauthenticated" && (
           <Link href="/api/auth/signin" passHref>
             <Button color="inherit" sx={{ ml: "auto" }}>
-              Sign In
+              Sign In (disabled for now)
             </Button>
           </Link>
         )}

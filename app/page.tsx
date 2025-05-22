@@ -1,107 +1,191 @@
-import { Container, Box, Typography } from "@mui/material";
-
-// Helper function to calculate the duration
-const calculateDuration = (
-  start: Date = new Date(),
-  end: Date = new Date()
-): string => {
-  const years = end.getFullYear() - start.getFullYear();
-  const months = end.getMonth() - start.getMonth();
-
-  const totalMonths = years * 12 + months;
-  const displayYears = Math.floor(totalMonths / 12);
-  const displayMonths = totalMonths % 12;
-
-  return `${displayYears} yrs ${displayMonths} mos`;
-};
+import {
+  Container,
+  Box,
+  Typography,
+  Divider,
+  Link,
+  Stack,
+} from "@mui/material";
+import { Duration } from "./components/Duration";
 
 export default function Home() {
-  const tgsStartDate: Date = new Date("2022-04-01");
-  const tgsEndDate: Date = new Date(); // Current date for active role
-  const erdosStartDate: Date = new Date("2018-09-01");
-  const erdosEndDate: Date = new Date("2022-04-01"); // Ended when you joined TGS
-
   return (
-    <Container sx={{ overflowY: "auto", height: "100%" }}>
-      <Box sx={{ my: 1 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Ashton
+    <Container sx={{ height: "100%", width: "100%", py: 4, mb: 10 }}>
+      <Box sx={{ width: "100%", py: 4, mb: 10 }}>
+        <Typography variant="h3" component="h1" gutterBottom>
+          Ashton Scalise
+        </Typography>
+        <Typography variant="h6" color="text.secondary" gutterBottom>
+          Full-Stack Engineer
         </Typography>
         <Typography variant="body1" paragraph>
-          Software Engineer with over 5 years of experience delivering
-          high-performance, scalable web applications. Proficient in building
-          responsive UIs, developing microservices, and designing RESTful APIs
-          with a focus on maintainability and scalability. Skilled in modern
-          JavaScript frameworks like React and TypeScript, with a strong
-          emphasis on component-driven architecture and state management. Adept
-          at optimizing front-end performance, implementing CI/CD pipelines, and
-          leveraging cloud services to drive continuous integration and
-          deployment in hybrid work environments.
+          I build scalable, resilient systems from UI to infrastructure. With a
+          focus on performance and user experience, I also architect APIs, cloud
+          deployments, and CI/CD pipelines to support fast iteration and
+          reliable delivery.
         </Typography>
 
-        {/* TGS + PGS Experience */}
-        <Typography variant="h6" component="h2" gutterBottom>
-          Software Engineer at TGS
+        <Divider sx={{ my: 3 }} />
+
+        {/* Experience */}
+        <Typography variant="h5" component="h2" gutterBottom>
+          Experience
         </Typography>
-        <Typography variant="body2" paragraph>
-          Full-time | Apr 2022 - Present | Houston, Texas, United States
-          (Hybrid)
-        </Typography>
-        <Typography variant="body1" paragraph>
-          {`Duration: ${calculateDuration(tgsStartDate, tgsEndDate)}`}
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Lead frontend developer for Job Builder, an internal React web
-          application used by geophysicists. The app featured a Figma-like UI,
-          allowing for dynamic job creation and management. Worked closely with
-          cross-functional teams to deliver features, and ensure optimal user
-          experience.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Technologies: React, TypeScript, Kubernetes, Docker, GitLab CI/CD, GCP
-        </Typography>
+
+        {/* TGS */}
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h6">Software Engineer – TGS</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Nov 2022 – Present · Houston, TX (Hybrid)
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Duration: <Duration start={new Date("2022-11-01")} />
+          </Typography>
+          <Typography variant="body1" paragraph sx={{ mt: 1 }}>
+            Spearheaded modernization of a legacy Qt desktop tool into a
+            cloud-native web platform using React and Next.js. Developed
+            middleware in Node.js to validate inputs and orchestrate data
+            processing. Designed FlowBuilder, a visual pipeline builder for
+            geophysicists, and built a GUI to manage petabytes of seismic data
+            across on-prem and GCP infrastructure.
+          </Typography>
+          <Typography variant="body2">
+            <strong>Tech:</strong> React, Next.js, TypeScript, Node.js, GCP,
+            Kubernetes, Docker, GitLab CI/CD
+          </Typography>
+        </Box>
 
         {/* Erdos Miller */}
-        <Typography variant="h6" component="h2" gutterBottom>
-          Software Engineer at Erdos Miller
-        </Typography>
-        <Typography variant="body2" paragraph>
-          {`Full-time | ${calculateDuration(erdosStartDate, erdosEndDate)}`}
-        </Typography>
-        <Typography variant="body2" paragraph>
-          Software Engineer | Mar 2020 - Apr 2022
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Developed frontend systems in Qt and React, focusing on displaying
-          real-time data from MWD (Measurement While Drilling) tools for
-          drilling operations. Collaborated with backend engineers to integrate
-          live data streams.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Built a custom web frontend for managing RMA requests, connecting with
-          company databases like Smartsheet.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Technologies: React, Qt, Smartsheet API
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h6">Software Engineer – Erdos Miller</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Mar 2020 – Apr 2022 · Houston, TX
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Duration
+              start={new Date("2020-03-01")}
+              end={new Date("2022-04-01")}
+            />
+          </Typography>
+          <Typography variant="body1" paragraph sx={{ mt: 1 }}>
+            Developed full-stack applications using Qt and React for real-time
+            MWD data visualization. Integrated backend data streams and designed
+            a custom RMA management platform interfacing with Smartsheet and
+            internal systems.
+          </Typography>
+          <Typography variant="body2">
+            <strong>Tech:</strong> React, Qt, Python, Smartsheet API, SQL
+          </Typography>
+        </Box>
+
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="subtitle1">
+            QA Engineer – Erdos Miller
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Sep 2018 – Mar 2020
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Duration
+              start={new Date("2018-09-01")}
+              end={new Date("2020-03-01")}
+            />
+          </Typography>
+          <Typography variant="body1" paragraph sx={{ mt: 1 }}>
+            Automated PDF report generation using Python to support quality
+            control in MWD testing. Enhanced test interfaces and contributed
+            features to production codebases.
+          </Typography>
+          <Typography variant="body2">
+            <strong>Tech:</strong> Python, MWD Tool Testing, Qt
+          </Typography>
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        {/* Projects */}
+        <Typography variant="h5" component="h2" gutterBottom>
+          Projects
         </Typography>
 
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle1">DMON</Typography>
+          <Typography variant="body2">
+            Real-time geophysical monitoring platform with live data pipelines
+            and alerting system.
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            React, TypeScript, Node.js, Next.js
+          </Typography>
+        </Box>
+
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle1">JobBuilderWeb</Typography>
+          <Typography variant="body2">
+            Figma-like internal tool for geophysical job creation and
+            management; focused on scalable, intuitive UI and cloud integration.
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            React, TypeScript, Docker, Kubernetes, GCP
+          </Typography>
+        </Box>
+
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="subtitle1">Eclipse</Typography>
+          <Typography variant="body2">
+            Qt-based MWD setup wizard with enhanced accuracy, exportable PDF
+            reports, and improved UI usability.
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            C++, QML, Python
+          </Typography>
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        {/* Skills */}
+        <Typography variant="h5" component="h2" gutterBottom>
+          Technical Skills
+        </Typography>
         <Typography variant="body2" paragraph>
-          QA Engineer | Sep 2018 - Mar 2020
+          <strong>Languages:</strong> JavaScript, TypeScript, Python, SQL
         </Typography>
-        <Typography variant="body1" paragraph>
-          Played a hybrid role, contributing to both software development and
-          quality assurance. Developed Python scripts to programmatically
-          generate PDF reports for MWD tool testing, creating an automated paper
-          trail for quality control. Added features to existing codebase for
-          interfacing with tool
+        <Typography variant="body2" paragraph>
+          <strong>Frameworks:</strong> React, Next.js, Node.js, Flask, Qt
         </Typography>
-        <Typography variant="body1" paragraph>
-          Actively involved in developing test cases and collaborating with the
-          software team to ensure smooth testing and deployment processes.
+        <Typography variant="body2" paragraph>
+          <strong>DevOps / Cloud:</strong> Docker, Kubernetes, GitLab CI/CD,
+          GCP, AWS, ArgoCD
         </Typography>
-        <Typography variant="body1" paragraph>
-          Technologies: Python, MWD Tool Testing
+        <Typography variant="body2" paragraph>
+          <strong>Other:</strong> pandas, NumPy, MUI, Jest, Chart.js, Reactflow
         </Typography>
+
+        <Divider sx={{ my: 3 }} />
+
+        {/* Contact */}
+        <Typography variant="h5" component="h2" gutterBottom>
+          Contact
+        </Typography>
+        <Stack spacing={1}>
+          <Link href="mailto:ashtonscalise@gmail.com" underline="hover">
+            ashtonscalise@gmail.com
+          </Link>
+          <Link
+            href="https://linkedin.com/in/ashton-scalise"
+            target="_blank"
+            underline="hover"
+          >
+            linkedin.com/in/ashton-scalise
+          </Link>
+          <Link
+            href="https://github.com/AshtonScalise"
+            target="_blank"
+            underline="hover"
+          >
+            github.com/AshtonScalise
+          </Link>
+        </Stack>
       </Box>
     </Container>
   );
