@@ -33,10 +33,10 @@ export default function Home() {
         <Box sx={{ mb: 3 }}>
           <Typography variant="h6">Software Engineer — TGS</Typography>
           <Typography variant="body2" color="text.secondary">
-            Nov 2022 – Present · Houston, TX
+            Apr 2022 – Present · Houston, TX
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Duration: <Duration start={new Date("2022-11-01")} />
+            Duration: <Duration start={new Date("2022-04-01")} />
           </Typography>
           <List dense>
             <ListItem>
