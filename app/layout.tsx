@@ -1,55 +1,51 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import * as React from "react";
-import MainAppBar from "./components/MainAppBar";
-import { AuthProvider } from "./auth/Provider";
-import { ThemeProviderWrapper } from "./wrappers/ThemeProviderWrapper";
-import { Paper } from "@mui/material";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
+  variable: "--font-sans",
   weight: "100 900",
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
+  variable: "--font-mono",
   weight: "100 900",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  title: "Ashton Scalise Portfolio",
-  description: "My Portfolio",
+  metadataBase: new URL(siteUrl),
+  title: "Ashton Scalise · Software Engineer",
+  description:
+    "Software engineer building platform tools and AI agents for seismic data processing, and browser games in three.js.",
+  openGraph: {
+    title: "Ashton Scalise · Software Engineer",
+    description:
+      "Platform tools and AI agents for seismic data processing, plus browser games: Invictum and Tandem.",
+    images: ["/images/invictum.jpg"],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#07070c",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AuthProvider>
-          <ThemeProviderWrapper>
-            <MainAppBar />
-            <Paper
-              elevation={12} // Adjust elevation for shadow
-              sx={{
-                marginTop: "60px", // Reduced margin for better spacing
-
-                padding: "10px", // Padding inside the Paper component
-
-                height: "calc(100vh - 60px)",
-                width: "100vw",
-                overflowY: "auto", // Allow for scrolling if content overflows
-              }}
-            >
-              {children}
-            </Paper>
-          </ThemeProviderWrapper>
-        </AuthProvider>
+        {children}
       </body>
     </html>
   );
