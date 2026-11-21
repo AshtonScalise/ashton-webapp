@@ -66,7 +66,7 @@ export const games: Game[] = [
     description:
       "A dinosaur and the pteranodon riding on his shoulders. One player hosts in the browser and a friend joins over peer-to-peer.",
     image: "/images/tandem.jpg",
-    imageAlt: "Tandem gameplay: Sprout standing in a sunny village clearing",
+    imageAlt: "Tandem title screen: Sprout standing in a cozy hut under the Tandem logo",
     url: "https://tandem-coop.fly.dev",
     cta: "Play",
     status: "Prototype",
